@@ -184,9 +184,9 @@ class App:
         self.ecran=[]
         self.select = None
         self.attacking = None # The unit selected to attack
-        for i in range(0,16):
+        for i in range(self.hei):
             self.ecran.append([])
-            for j in range(0,16):
+            for j in range(self.wid):
                 self.ecran[i].append(8*pyxel.rndi(0,4))
         pyxel.run(self.update, self.draw)
 
@@ -323,11 +323,13 @@ class App:
             pyxel.text(30,60,"Au tour du joueur 2",7)
         if self.affichage==3:
             pyxel.cls(0)
-            for i in range(0,16):
-                for j in range(0,16):
-                    pyxel.blt(i*8,j*8,0,self.ecran[i][j],self.fond,8,8)
-            
             self.vision = generate_vision(self.carte,self.joueur)
+            for x in range(0,16):
+                for y in range(0,16):
+                    if not(0<=x-self.offset[0]<self.wid  and 0<=y-self.offset[1]<self.hei): continue
+                    if self.vision[y-self.offset[1]][x-self.offset[0]] :
+                        pyxel.blt(x*8,y*8,0,self.ecran[y-self.offset[1]][x-self.offset[0]],self.fond,8,8)
+            
             for x in range(len(self.carte[0])):
                 for y in range(len(self.carte)):
                     a=self.carte[y][x] 
@@ -342,3 +344,4 @@ class App:
     
             self.curseur.update(self.offset)
 App()
+
