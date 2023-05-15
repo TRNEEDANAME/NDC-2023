@@ -233,28 +233,28 @@ class App:
                 if self.curseur.y<0:
                     self.curseur.y=0
                 if not self.vision[self.curseur.y][self.curseur.x] : self.curseur.y += 1
-                if self.curseur.y + self.offset[1] < 6 : self.offset[1]+=1
+                if self.curseur.y + self.offset[1] < 7 : self.offset[1]+=1
             elif pyxel.btnp(pyxel.KEY_DOWN):
                 self.curseur.y+=1
                 if self.select != None : self.select.move([0,1],self.carte)
                 if self.curseur.y>=self.hei:
                     self.curseur.y=self.hei-1
                 if not self.vision[self.curseur.y][self.curseur.x] : self.curseur.y -= 1
-                if self.curseur.y + self.offset[1] > 9 : self.offset[1]-=1
+                if self.curseur.y + self.offset[1] > 8 : self.offset[1]-=1
             elif pyxel.btnp(pyxel.KEY_LEFT):
                 self.curseur.x-=1
                 if self.select != None : self.select.move([-1,0],self.carte)
                 if self.curseur.x<0:
                     self.curseur.x=0
                 if not self.vision[self.curseur.y][self.curseur.x] : self.curseur.x += 1
-                if self.curseur.x + self.offset[0] < 6 : self.offset[0]+=1
+                if self.curseur.x + self.offset[0] < 7 : self.offset[0]+=1
             elif pyxel.btnp(pyxel.KEY_RIGHT):
                 self.curseur.x+=1
                 if self.select != None : self.select.move([1,0],self.carte)
                 if self.curseur.x>=self.wid:
                     self.curseur.x=self.wid-1
                 if not self.vision[self.curseur.y][self.curseur.x] : self.curseur.x -= 1
-                if self.curseur.x + self.offset[0] > 9 : self.offset[0]-=1
+                if self.curseur.x + self.offset[0] > 8 : self.offset[0]-=1
 
             bat = self.carte[self.curseur.y][self.curseur.x]
             if bat != self.select : self.select = None
