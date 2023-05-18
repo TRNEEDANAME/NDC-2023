@@ -173,7 +173,7 @@ class Curseur():
 
     def update(self,offset,big = False,pos = (0,0)):
         if big :
-            pyxel.blt((pos[0]+offset[0])*8,(pos[1]+offset[1])*8,1,0,16*(10+self.player),8,8,0)
+            pyxel.blt((pos[0]+offset[0])*8,(pos[1]+offset[1])*8,1,0,16*(10+self.player),16,16,0)
         else:
             pyxel.blt((self.x+offset[0])*8,(self.y+offset[1])*8,2,0,8*(11+self.player),8,8,0)
 
@@ -387,7 +387,7 @@ class App:
             else : a=self.bat.vie
             pyxel.text(15,22,str(a),0)
 
-            if self.bat in [base,tour,ferme,mur]:
+            if type(self.bat) in [base,tour,ferme,mur]:
                 self.curseur.update(self.offset,True,(self.bat.x,self.bat.y))
             else:
                 self.curseur.update(self.offset)
