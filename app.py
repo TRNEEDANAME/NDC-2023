@@ -33,7 +33,7 @@ def find_empty(m,b):
     wid = len(m[0])
     hei = len(m)
     for i in pos :
-        if 0<=i[0]<wid and 0<=i[1]<hei : tot.append(i)
+        if (0<=i[0]<wid and 0<=i[1]<hei) and m[i[1]][i[0]] == None : tot.append(i)
     return tot
         
 def build(bat,m):
