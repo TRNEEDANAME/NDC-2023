@@ -13,6 +13,10 @@ If you use the .exe file, there is no need for Pyxel
 
 If you want to play with friends, use [Parsec](https://parsec.app/)
 
+You start with 110 Gold. You gain 10 coins each round + 10 for each farm.
+
+IMPORTANT : If you loose vision of a unit, you cannot control it.
+
 ## FAQ
 
 ### What are the controls ?
@@ -20,15 +24,15 @@ If you want to play with friends, use [Parsec](https://parsec.app/)
 left, down, up, right : move the cursor
 
 on empty tile:
-1: tower = 
-2: wall = 
-3: casern = 
-4: farm = 
+1: tower = 50 gold
+2: wall = 100 gold
+3: casern = 70 gold
+4: farm = 30 gold (+25% of cost for each subsequent farms)
 
 on own caserne:
-1: knight
-2: archer
-3: scout
+1: knight = 10 gold
+2: archer = 30 gold
+3: scout = 30 gold
 
 on own unit:
 1: move 
