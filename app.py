@@ -387,7 +387,7 @@ class App:
             else : a=self.bat.vie
             pyxel.text(15,22,str(a),0)
 
-            if type(self.bat) in [base,tour,ferme,mur]:
+            if type(self.bat) in [base,tour,ferme,mur,caserne]:
                 self.curseur.update(self.offset,True,(self.bat.x,self.bat.y))
             else:
                 self.curseur.update(self.offset)
