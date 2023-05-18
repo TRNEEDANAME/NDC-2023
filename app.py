@@ -215,7 +215,7 @@ class App:
                         self.curseur.player=joueur
                         found = True
                         
-        self.gold[self.joueur] += 10 + nb_ferme*2
+        self.gold[self.joueur] += int(10 + nb_ferme)
 
     def update(self):
         vision = generate_vision(self.carte,1)
@@ -227,7 +227,7 @@ class App:
                 x1,y1 = pyxel.rndi(0,self.wid-2),pyxel.rndi(0,self.hei-2)
                 build(base(x1,y1,0),self.carte)
                 x2,y2 = pyxel.rndi(0,self.wid-2),pyxel.rndi(0,self.hei-2)
-                while x2 in [x1,x1+1,x1-1] or y2 in [y1, y1+1, y1-1] :
+                while x2==x1 or y2 == y1 :
                    x2,y2 = pyxel.rndi(0,self.wid-2),pyxel.rndi(0,self.hei-2)
                 build(base(x2,y2,1),self.carte)
                 self.affichage=1
@@ -284,17 +284,17 @@ class App:
                         self.gold[self.joueur] -= 50
                         build(tour(self.curseur.x,self.curseur.y,self.joueur),self.carte)
                 if type(bat) == caserne and bat.player==self.joueur:
-                    if self.gold[self.joueur] >= 20:
+                    if self.gold[self.joueur] >= 10:
                         if make(bat,knight, self.carte,self.joueur):
-                            self.gold[self.joueur] -= 20
+                            self.gold[self.joueur] -= 10
                 if type(bat) in [knight, archer, scout] and bat.player==self.joueur:
                     if self.select == bat : self.select = None
                     else : self.select = bat
 
             if pyxel.btnp(pyxel.KEY_2) or pyxel.btnp(pyxel.KEY_KP_2):
                 if bat == None:
-                    if self.gold[self.joueur] >= 150:
-                        self.gold[self.joueur] -= 150
+                    if self.gold[self.joueur] >= 100:
+                        self.gold[self.joueur] -= 100
                         build(mur(self.curseur.x,self.curseur.y,self.joueur),self.carte)
                 if type(bat) == caserne and bat.player==self.joueur:
                     if self.gold[self.joueur] >= 30:
@@ -313,9 +313,9 @@ class App:
                         build(caserne(self.curseur.x,self.curseur.y,self.joueur),self.carte)
                 
                 if type(bat) == caserne and bat.player==self.joueur:
-                    if self.gold[self.joueur] >= 10:
+                    if self.gold[self.joueur] >= 30:
                         if make(bat,scout, self.carte,self.joueur):
-                            self.gold[self.joueur] -= 10
+                            self.gold[self.joueur] -= 30
 
                 if self.attacking != None and bat != None :
                     self.attacking.atack(bat,self.carte)
