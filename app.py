@@ -359,5 +359,7 @@ class App:
                     elif not(self.vision[y-self.offset[1]][x-self.offset[0]]):
                         pyxel.blt(x*8,y*8,0,40,self.fond,8,8)
     
+            pyxel.blt(5,5,0,0,248,8,8,0)
+            pyxel.text(13,5,str(self.gold[self.joueur]),7)
             self.curseur.update(self.offset)
 App()
