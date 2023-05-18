@@ -175,15 +175,15 @@ class App:
         pyxel.init(128,128, title="NDC 2023")
         pyxel.load("NDC.pyxres")
         self.gold = [100,100] # La quantité de départ de gold de chaque joueurs
-        self.joueur=1
-        self.affichage=0
+        self.joueur=0
+        self.affichage=4
         self.wid = 50
         self.hei = 50
         self.carte=generate_map(self.wid,self.hei)
         self.offset=[0,0]
         build(base(8,8,1),self.carte)
-        self.curseur=Curseur(8,8,1)
         build(base(41,41,0),self.carte)
+        self.curseur=Curseur(8,8,1)
         self.fond=8*pyxel.rndi(0,3)
         self.ecran=[]
         self.select = None
@@ -333,15 +333,15 @@ class App:
         if self.affichage==0:
             pyxel.cls(3)
             pyxel.blt(48,48,0,0,64,32,32,0)
-            pyxel.text(40,28,"Pyxel Knights",7)
-            pyxel.text(30,100,"Appuyez sur entree",7)
-        if self.affichage==1:
+            pyxel.text(38,28,"Pyxel Knights",7)
+            pyxel.text(42,100,"Press start",7)
+        elif self.affichage==1:
             pyxel.cls(0)
-            pyxel.text(30,60,"Au tour du joueur 1",7)
-        if self.affichage==2:
+            pyxel.text(32,60,"Player 1's turn",7)
+        elif self.affichage==2:
             pyxel.cls(0)
-            pyxel.text(30,60,"Au tour du joueur 2",7)
-        if self.affichage==3:
+            pyxel.text(31,60,"Player 2's turn",7)
+        elif self.affichage==3:
             pyxel.cls(0)
             self.vision = generate_vision(self.carte,self.joueur)
             for x in range(0,16):
@@ -370,4 +370,8 @@ class App:
             pyxel.text(15,22,str(a),0)
 
             self.curseur.update(self.offset)
+
+        elif self.affichage==4:
+            pyxel.cls(0)
+            pyxel.text(35,60,"Player "+str(self.joueur+1)+" win !",7)
 App()
