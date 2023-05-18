@@ -2,6 +2,16 @@
 
 A game
 
+## How to play the game
+
+### What you will need
+
+- Pyxel
+- That's it
+
+## FAQ
+
+### What are the controls ?
 
 left,down,up,right : move cursor
 

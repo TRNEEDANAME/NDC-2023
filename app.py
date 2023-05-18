@@ -199,7 +199,7 @@ class App:
         pyxel.run(self.update, self.draw)
 
     def joueur_suivant(self,joueur):
-        nb_ferme = 0
+        nb_ferme = 0 #this is 4 times the actual number of farm
         self.select = None
         self.attacking = None
         found = False
