@@ -181,8 +181,11 @@ class App:
         self.hei = 50
         self.carte=generate_map(self.wid,self.hei)
         self.offset=[0,0]
+<<<<<<< HEAD
         build(base(8,8,1),self.carte)
         build(base(41,41,0),self.carte)
+=======
+>>>>>>> 3e2cd12 (randomized starting position)
         self.curseur=Curseur(8,8,1)
         self.fond=8*pyxel.rndi(0,3)
         self.ecran=[]
@@ -226,6 +229,12 @@ class App:
 
         elif self.affichage==0:
             if pyxel.btnp(pyxel.KEY_RETURN):
+                x1,y1 = pyxel.rndi(0,self.wid-2),pyxel.rndi(0,self.hei-2)
+                build(base(x1,y1,0),self.carte)
+                x2,y2 = pyxel.rndi(0,self.wid-2),pyxel.rndi(0,self.hei-2)
+                while x2==x1 or y2 == y1 :
+                   x2,y2 = pyxel.rndi(0,self.wid-2),pyxel.rndi(0,self.hei-2)
+                build(base(x2,y2,1),self.carte)
                 self.affichage=1
             
         elif self.affichage==1 or self.affichage==2:
