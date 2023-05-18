@@ -66,6 +66,7 @@ class Personnage:
         self.ar = ar
         self.unite=unite
         self.vie=vie
+        self.vie_max=vie
         self.player=player
         self.vision=vision
         self.nbatack = 1
@@ -99,9 +100,11 @@ class Personnage:
         self.mvt =self.mvtmax
         self.nbatack = 1
 
-        
     def update(self,offset):
         pyxel.blt((self.x+offset[0])*8,(self.y+offset[1])*8,2,0,self.unite*32+16*self.player,8,8,0)
+        if self.vie<self.vie_max:
+            pyxel.rect((self.x+offset[0])*8+1,(self.y+offset[1])*8-1,6,1,8)
+            pyxel.rect((self.x+offset[0])*8+1,(self.y+offset[1])*8-1,int(6*self.vie/self.vie_max),1,3)
 
 class Batiment:
     def __init__(self,x,y,vie,unite,player,vision):
@@ -133,7 +136,7 @@ class knight(Personnage):
 
 class archer(Personnage):
     def __init__(self,x,y,player):
-        Personnage.__init__(self,x,y,8,5,1,player,5,5,3)
+        Personnage.__init__(self,x,y,10,5,1,player,5,5,3)
 
 class scout(Personnage):
     def __init__(self,x,y,player):
@@ -166,7 +169,7 @@ class Curseur():
         self.x=x
         self.y=y
         self.player=player
-    
+
     def update(self,offset):
         pyxel.blt((self.x+offset[0])*8,(self.y+offset[1])*8,2,0,8*(11+self.player),8,8,0)
 
@@ -321,7 +324,7 @@ class App:
 
                 if self.attacking != None and bat != None :
                     self.attacking.atack(bat,self.carte)
-                    if type(bat) == base and bat.player != self.joueur:
+                    if type(bat) == base and bat.vie<=0 and bat.player != self.joueur:
                         self.end = True
                     
 
@@ -374,7 +377,7 @@ class App:
             pyxel.blt(0,0,0,0,240,16,16,7)
             pyxel.text(13,6,str(self.gold[self.joueur]),0)
             pyxel.blt(0,16,0,0,224,16,16,7)
-            if self.bat == None : a=0
+            if self.bat == None : a=
             else : a=self.bat.vie
             pyxel.text(15,22,str(a),0)
 
