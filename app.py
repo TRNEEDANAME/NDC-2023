@@ -181,11 +181,6 @@ class App:
         self.hei = 50
         self.carte=generate_map(self.wid,self.hei)
         self.offset=[0,0]
-<<<<<<< HEAD
-        build(base(8,8,1),self.carte)
-        build(base(41,41,0),self.carte)
-=======
->>>>>>> 3e2cd12 (randomized starting position)
         self.curseur=Curseur(8,8,1)
         self.fond=8*pyxel.rndi(0,3)
         self.ecran=[]
