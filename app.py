@@ -192,6 +192,7 @@ class App:
         self.fond=8*pyxel.rndi(0,3)
         self.select = None
         self.bat = None
+        self.farm_price = [30,30] # Used to keep track of farm price
         self.attacking = None # The unit selected to attack
         self.end = False #used for ending game
         self.ecran=[[8*pyxel.rndi(0,4) for i in range(self.wid)] for j in range(self.hei)]
@@ -220,7 +221,7 @@ class App:
                         self.curseur.player=joueur
                         found = True
                         
-        self.gold[self.joueur] += int(10 + nb_ferme)
+        self.gold[self.joueur] += int(10 + nb_ferme*2.5)
         if not(found) : self.affichage=4
 
     def update(self):
@@ -331,9 +332,10 @@ class App:
 
             if pyxel.btnp(pyxel.KEY_4) or pyxel.btnp(pyxel.KEY_KP_4):
                 if bat == None:
-                    if self.gold[self.joueur] >= 40:
+                    if self.gold[self.joueur] >= self.farm_price[self.joueur]:
                         if build(ferme(self.curseur.x,self.curseur.y,self.joueur),self.carte) :
-                            self.gold[self.joueur] -= 40
+                            self.gold[self.joueur] -= self.farm_price[self.joueur]
+                            self.farm_price[self.joueur] = int(self.farm_price[self.joueur]*1.25)
 
 
             if pyxel.btnp(pyxel.KEY_RETURN):
