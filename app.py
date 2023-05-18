@@ -171,8 +171,11 @@ class Curseur():
         self.y=y
         self.player=player
 
-    def update(self,offset):
-        pyxel.blt((self.x+offset[0])*8,(self.y+offset[1])*8,2,0,8*(11+self.player),8,8,0)
+    def update(self,offset,big = False,pos = (0,0)):
+        if big :
+            pyxel.blt((pos[0]+offset[0])*8,(pos[1]+offset[1])*8,1,0,16*(10+self.player),8,8,0)
+        else:
+            pyxel.blt((self.x+offset[0])*8,(self.y+offset[1])*8,2,0,8*(11+self.player),8,8,0)
 
 class App:
     def __init__(self):
@@ -373,7 +376,8 @@ class App:
                         a.update(self.offset)
             for y in range(16):
                 for x in range(16):
-                    if not(self.vision[y-self.offset[1]][x-self.offset[0]]) and (0<=x-self.offset[0]<self.wid  and 0<=y-self.offset[1]<self.hei):
+                    if not (0<=x-self.offset[0]<self.wid  and 0<=y-self.offset[1]<self.hei) : continue
+                    if not(self.vision[y-self.offset[1]][x-self.offset[0]]) :
                         pyxel.blt(x*8,y*8,0,40,self.fond,8,8)
     
             pyxel.blt(0,0,0,0,240,16,16,7)
@@ -383,7 +387,10 @@ class App:
             else : a=self.bat.vie
             pyxel.text(15,22,str(a),0)
 
-            self.curseur.update(self.offset)
+            if self.bat in [base,tour,ferme,mur]:
+                self.curseur.update(self.offset,True,(self.bat.x,self.bat.y))
+            else:
+                self.curseur.update(self.offset)
 
         elif self.affichage==4:
             pyxel.cls(0)
