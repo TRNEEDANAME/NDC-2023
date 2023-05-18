@@ -347,7 +347,7 @@ class App:
             pyxel.cls(3)
             pyxel.blt(48,48,0,0,64,32,32,0)
             pyxel.text(38,28,"Pyxel Knights",7)
-            pyxel.text(42,100,"Press enter to start",7)
+            pyxel.text(24,100,"Press enter to start",7)
         elif self.affichage==1:
             pyxel.cls(0)
             pyxel.text(32,60,"Player 1's turn",7)
@@ -361,14 +361,14 @@ class App:
             for y in range(16):
                 for x in range(16):
                     pyxel.blt(x*8,y*8,0,self.eau[x][y],32,8,8)
-
+                
             self.vision = generate_vision(self.carte,self.joueur)
             for x in range(0,16):
                 for y in range(0,16):
                     if not(0<=x-self.offset[0]<self.wid  and 0<=y-self.offset[1]<self.hei): continue
                     if self.vision[y-self.offset[1]][x-self.offset[0]] :
                         pyxel.blt(x*8,y*8,0,self.ecran[y-self.offset[1]][x-self.offset[0]],self.fond,8,8)
-
+            
             for x in range(len(self.carte[0])):
                 for y in range(len(self.carte)):
                     a=self.carte[y][x] 
@@ -379,7 +379,7 @@ class App:
                     if not (0<=x-self.offset[0]<self.wid  and 0<=y-self.offset[1]<self.hei) : continue
                     if not(self.vision[y-self.offset[1]][x-self.offset[0]]) :
                         pyxel.blt(x*8,y*8,0,40,self.fond,8,8)
-
+    
             pyxel.blt(0,0,0,0,240,16,16,7)
             pyxel.text(13,6,str(self.gold[self.joueur]),0)
             pyxel.blt(0,16,0,0,224,16,16,7)
