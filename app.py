@@ -181,7 +181,7 @@ class App:
     def __init__(self):
         pyxel.init(128,128, title="NDC 2023")
         pyxel.load("NDC.pyxres")
-        self.gold = [100,100] # La quantité de départ de gold de chaque joueurs
+        self.gold = [100,100] # Starting quantity of gold
         self.joueur=1
         self.affichage=0
         self.wid = 50
