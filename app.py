@@ -90,8 +90,8 @@ class Personnage:
         if self.vie <= 0:
             m[self.y][self.x] = None
             
-    def atack(self,thing,m):
-        if abs(thing.x-self.x + thing.y-self.y)/2 >= self.ar : return
+    def atack(self,thing,m,pos):
+        if abs(pos[0]-self.x + pos[1]-self.y)/2 >= self.ar : return
         if self.nbatack == 0 : return
         self.nbatack -= 1
         thing.damage(self.attaque,m)
@@ -320,7 +320,7 @@ class App:
                             self.gold[self.joueur] -= 30
 
                 if self.attacking != None and bat != None :
-                    self.attacking.atack(bat,self.carte)
+                    self.attacking.atack(bat,self.carte,(self.curseur.x,self.curseur.y))
                     if type(bat) == base and bat.vie<=0 and bat.player != self.joueur:
                         self.end = True
                     
