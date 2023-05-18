@@ -164,13 +164,13 @@ class Curseur():
         self.player=player
     
     def update(self,offset):
-        pyxel.blt((self.x+offset[0])*8,(self.y+offset[1])*8,2,0,97-self.player,8,8,0)
+        pyxel.blt((self.x+offset[0])*8,(self.y+offset[1])*8,2,0,8*(11+self.player),8,8,0)
 
 class App:
     def __init__(self):
         pyxel.init(128,128, title="NDC 2023")
         pyxel.load("NDC.pyxres")
-        self.gold = [100,100] # La quantitee de depart de golod de chaque joueurs
+        self.gold = [100,100] # La quantité de départ de gold de chaque joueurs
         self.joueur=1
         self.affichage=1
         self.wid = 50
@@ -209,6 +209,7 @@ class App:
                         self.offset[1]=-(j.y-7)
                         self.affichage=3
                         self.joueur=joueur
+                        self.curseur.player=joueur
                         found = True
                         
         self.gold[self.joueur] += 10 + nb_ferme*2
@@ -344,4 +345,3 @@ class App:
     
             self.curseur.update(self.offset)
 App()
-
