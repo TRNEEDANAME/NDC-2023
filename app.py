@@ -95,16 +95,19 @@ class Personnage:
         m[y][x] = None
         self.mvt -= 1
 
-    def damage(self,n,m):
+        
+    def damage(self,n,m,r):
         self.vie -= n
         if self.vie <= 0:
             m[self.y][self.x] = None
- 
-    def atack(self,thing,m,pos):
+            r[self.y][self.x] = (2,8,self.unite*32+16*self.player)
+            
+    def atack(self,thing,m,pos,r):
         if abs(pos[0]-self.x + pos[1]-self.y)/2 >= self.ar : return
         if self.nbatack == 0 : return
         self.nbatack -= 1
-        thing.damage(self.attaque,m)
+        thing.damage(self.attaque,m,r)
+        
 
     def new_turn(self):
         self.mvt =self.mvtmax
@@ -130,13 +133,17 @@ class Batiment:
         self.player=player
         self.vision=vision
 
-    def damage(self,n,m):
+    def damage(self,n,m,r):
         self.vie -= n
         if self.vie <= 0:
             m[self.y][self.x] = None
             m[self.y+1][self.x+1] = None
             m[self.y+1][self.x] = None
             m[self.y][self.x+1] = None
+            r[self.y][self.x] = (1,16,self.unite*32+16*self.player)
+            r[self.y+1][self.x+1] = (1,24,self.unite*32+16*self.player+8)
+            r[self.y+1][self.x] = (1,16,self.unite*32+16*self.player+8)
+            r[self.y][self.x+1] = (1,24,self.unite*32+16*self.player)
 
     def update(self,offset):
         pyxel.blt((self.x+offset[0])*8,(self.y+offset[1])*8,1,0,self.unite*32+16*self.player,16,16,0)
@@ -218,6 +225,7 @@ class App:
         self.fond=8*pyxel.rndi(0,3)
         self.select = None
         self.bat = None
+        self.remain=[[None for i in range(self.wid)] for j in range(self.hei)] #Used for dead unit and building in the background
         self.farm_price = [30,30] # Used to keep track of farm price
         self.attacking = None # The unit selected to attack
         self.end = False #used for ending game
@@ -351,7 +359,7 @@ class App:
                             self.gold[self.joueur] -= 30
 
                 if self.attacking != None and bat != None :
-                    self.attacking.atack(bat,self.carte,(self.curseur.x,self.curseur.y))
+                    self.attacking.atack(bat,self.carte,(self.curseur.x,self.curseur.y),self.remain)
                     if type(bat) == base and bat.vie<=0 and bat.player != self.joueur:
                         self.end = True
                     
@@ -393,9 +401,11 @@ class App:
             self.vision = generate_vision(self.carte,self.joueur)
             for x in range(0,16):
                 for y in range(0,16):
+                    r = self.remain[y-self.offset[1]][x-self.offset[0]]
                     if not(0<=x-self.offset[0]<self.wid  and 0<=y-self.offset[1]<self.hei): continue
                     if self.vision[y-self.offset[1]][x-self.offset[0]] :
                         pyxel.blt(x*8,y*8,0,self.ecran[y-self.offset[1]][x-self.offset[0]],self.fond,8,8)
+                    if not r == None : pyxel.blt(x*8,y*8,r[0],r[1],r[2],8,8,0)
             
             for x in range(len(self.carte[0])):
                 for y in range(len(self.carte)):
