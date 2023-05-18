@@ -9,6 +9,10 @@ A game
 - Pyxel
 - That's it
 
+If you use the .exe file, there is no need for Pyxel
+
+If you want to play with friends, use [Parsec](https://parsec.app/)
+
 ## FAQ
 
 ### What are the controls ?
@@ -16,10 +20,10 @@ A game
 left, down, up, right : move the cursor
 
 on empty tile:
-1: tower
-2: wall
-3: casern
-4: farm
+1: tower = 
+2: wall = 
+3: casern = 
+4: farm = 
 
 on own caserne:
 1: knight
