@@ -6,10 +6,10 @@ A game
 left,down,up,right : move cursor
 
 on empty tile:
-1: tour
-2: mur
-3: caserne
-4: ferme
+1: tower
+2: wall
+3: casern
+4: farm
 
 on own caserne:
 1: knight
