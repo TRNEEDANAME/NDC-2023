@@ -187,6 +187,7 @@ class App:
         self.select = None
         self.bat = None
         self.attacking = None # The unit selected to attack
+        self.end = False #used for ending game
         for i in range(self.hei):
             self.ecran.append([])
             for j in range(self.wid):
@@ -216,6 +217,7 @@ class App:
                         found = True
                         
         self.gold[self.joueur] += int(10 + nb_ferme)
+        if not(found) : self.affichage=4
 
     def update(self):
         vision = generate_vision(self.carte,1)
@@ -319,6 +321,8 @@ class App:
 
                 if self.attacking != None and bat != None :
                     self.attacking.atack(bat,self.carte)
+                    if type(bat) == base and bat.player != self.joueur:
+                        self.end = True
                     
 
             if pyxel.btnp(pyxel.KEY_4) or pyxel.btnp(pyxel.KEY_KP_4):
@@ -329,7 +333,8 @@ class App:
 
 
             if pyxel.btnp(pyxel.KEY_RETURN):
-                if self.joueur == 0 : self.affichage = 2
+                if self.end == True : self.affichage = 4
+                elif self.joueur == 0 : self.affichage = 2
                 else : self.affichage = 1
           
         
