@@ -13,7 +13,7 @@ A game
 
 ### What are the controls ?
 
-left,down,up,right : move cursor
+left, down, up, right : move the cursor
 
 on empty tile:
 1: tower
