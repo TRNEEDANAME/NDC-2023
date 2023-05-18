@@ -9,7 +9,6 @@ A game
 - Pyxel
 - That's it
 
-#### Supported mod
 ## FAQ
 
 ### What are the controls ?
