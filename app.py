@@ -187,6 +187,7 @@ class App:
         self.fond=8*pyxel.rndi(0,3)
         self.ecran=[]
         self.select = None
+        self.bat = None
         self.attacking = None # The unit selected to attack
         for i in range(self.hei):
             self.ecran.append([])
@@ -268,6 +269,8 @@ class App:
                 if self.curseur.x + self.offset[0] > 8 : self.offset[0]-=1
 
             bat = self.carte[self.curseur.y][self.curseur.x]
+            self.bat = bat
+
             if bat != self.select : self.select = None
 
             
@@ -361,5 +364,10 @@ class App:
     
             pyxel.blt(0,0,0,0,240,16,16,7)
             pyxel.text(13,6,str(self.gold[self.joueur]),0)
+            pyxel.blt(0,16,0,0,224,16,16,7)
+            if self.bat == None : a=0
+            else : a=self.bat.vie
+            pyxel.text(15,22,str(a),0)
+
             self.curseur.update(self.offset)
 App()
