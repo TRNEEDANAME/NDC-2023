@@ -1,13 +1,18 @@
+# =========================================================================================================
+# ======================== A GAME BY TRNEEDANAME, maybenotyou, 1Dorian ===============================
+# =========================================================================================================
+
+
 import pyxel
 
 def generate_map(wid,hei):
     carte = [[ None for i in range(wid)] for j in range(hei)]
     return carte
-    
+
 def generate_False(wid,hei):
     carte = [[ False for i in range(wid)] for j in range(hei)]
     return carte
-    
+
 def generate_vision(m,p):
     wid = len(m[0])
     hei = len(m)
@@ -35,7 +40,7 @@ def find_empty(m,b):
     for i in pos :
         if (0<=i[0]<wid and 0<=i[1]<hei) and m[i[1]][i[0]] == None : tot.append(i)
     return tot
-        
+
 def build(bat,m):
     x = bat.x
     y = bat.y
@@ -54,7 +59,11 @@ def make(b,unit,m,p):
     position = pos[pyxel.rndi(0,len(pos)-1)]
     m[position[1]][position[0]] = unit(position[0],position[1],p)
     return True
-        
+
+# ======================================================================
+# ========================= CHARACTER CLASS ============================
+# ======================================================================
+
 
 class Personnage:
     def __init__(self,x,y,vie,attaque,unite,player,mvt,ar,vision):
@@ -71,7 +80,7 @@ class Personnage:
         self.player=player
         self.vision=vision
         self.nbatack = 1
-        
+
     def move(self,d,m):
         x = self.x
         y = self.y
@@ -85,18 +94,18 @@ class Personnage:
         m[y+d[1]][x+d[0]] = self
         m[y][x] = None
         self.mvt -= 1
-        
+
     def damage(self,n,m):
         self.vie -= n
         if self.vie <= 0:
             m[self.y][self.x] = None
-            
+ 
     def atack(self,thing,m,pos):
         if abs(pos[0]-self.x + pos[1]-self.y)/2 >= self.ar : return
         if self.nbatack == 0 : return
         self.nbatack -= 1
         thing.damage(self.attaque,m)
-        
+
     def new_turn(self):
         self.mvt =self.mvtmax
         self.nbatack = 1
@@ -106,6 +115,10 @@ class Personnage:
         if self.vie<self.vie_max:
             pyxel.rect((self.x+offset[0])*8+1,(self.y+offset[1])*8-1,6,1,8)
             pyxel.rect((self.x+offset[0])*8+1,(self.y+offset[1])*8-1,int(6*self.vie/self.vie_max),1,3)
+
+# ======================================================================
+# ========================= BUILDINGS CLASS ============================
+# ======================================================================
 
 class Batiment:
     def __init__(self,x,y,vie,unite,player,vision):
@@ -131,6 +144,11 @@ class Batiment:
             pyxel.rect((self.x+offset[0])*8+3,(self.y+offset[1])*8-1,10,1,8)
             pyxel.rect((self.x+offset[0])*8+3,(self.y+offset[1])*8-1,int(10*self.vie/self.vie_max),1,3)
 
+# ======================================================================
+# ================================ UNITS ===============================
+# ======================================================================
+
+
 class knight(Personnage):
     def __init__(self,x,y,player):
         Personnage.__init__(self,x,y,15,4,0,player,7,1,2)
@@ -142,6 +160,11 @@ class archer(Personnage):
 class scout(Personnage):
     def __init__(self,x,y,player):
         Personnage.__init__(self,x,y,5,1,2,player,12,1,8)
+
+# ======================================================================
+# ============================= BULDINGS ===============================
+# ======================================================================
+
 
 class base(Batiment):
     def __init__(self,x,y,player):
@@ -164,6 +187,9 @@ class mur(Batiment):
     def __init__(self,x,y,player):
         Batiment.__init__(self,x,y,70,4,player,0)
 
+# ======================================================================
+# =============================== CURSOR ===============================
+# ======================================================================
 
 class Curseur():
     def __init__(self,x,y,player):
