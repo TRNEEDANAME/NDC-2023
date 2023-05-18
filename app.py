@@ -344,7 +344,7 @@ class App:
             pyxel.cls(3)
             pyxel.blt(48,48,0,0,64,32,32,0)
             pyxel.text(38,28,"Pyxel Knights",7)
-            pyxel.text(42,100,"Press start",7)
+            pyxel.text(42,100,"Press any button to startstart",7)
         elif self.affichage==1:
             pyxel.cls(0)
             pyxel.text(32,60,"Player 1's turn",7)
