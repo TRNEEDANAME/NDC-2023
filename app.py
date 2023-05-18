@@ -103,7 +103,7 @@ class Personnage:
             r[self.y][self.x] = (2,8,self.unite*32+16*self.player)
             
     def atack(self,thing,m,pos,r):
-        if abs(pos[0]-self.x + pos[1]-self.y)/2 >= self.ar : return
+        if pyxel.sqrt((pos[0]-self.x)**2 + (pos[1]-self.y)**2) > self.ar : return
         if self.nbatack == 0 : return
         self.nbatack -= 1
         thing.damage(self.attaque,m,r)
@@ -401,10 +401,10 @@ class App:
             self.vision = generate_vision(self.carte,self.joueur)
             for x in range(0,16):
                 for y in range(0,16):
-                    r = self.remain[y-self.offset[1]][x-self.offset[0]]
                     if not(0<=x-self.offset[0]<self.wid  and 0<=y-self.offset[1]<self.hei): continue
                     if self.vision[y-self.offset[1]][x-self.offset[0]] :
                         pyxel.blt(x*8,y*8,0,self.ecran[y-self.offset[1]][x-self.offset[0]],self.fond,8,8)
+                    r = self.remain[y-self.offset[1]][x-self.offset[0]]
                     if not r == None : pyxel.blt(x*8,y*8,r[0],r[1],r[2],8,8,0)
             
             for x in range(len(self.carte[0])):
