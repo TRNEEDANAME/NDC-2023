@@ -186,15 +186,12 @@ class App:
         self.offset=[0,0]
         self.curseur=Curseur(8,8,1)
         self.fond=8*pyxel.rndi(0,3)
-        self.ecran=[]
         self.select = None
         self.bat = None
         self.attacking = None # The unit selected to attack
         self.end = False #used for ending game
-        for i in range(self.hei):
-            self.ecran.append([])
-            for j in range(self.wid):
-                self.ecran[i].append(8*pyxel.rndi(0,4))
+        self.ecran=[[8*pyxel.rndi(0,4) for i in range(self.wid)] for j in range(self.hei)]
+        self.eau=[[8*pyxel.rndi(0,4) for i in range(16)] for j in range(16)]
         pyxel.run(self.update, self.draw)
 
     def joueur_suivant(self,joueur):
@@ -355,6 +352,12 @@ class App:
             pyxel.text(31,60,"Player 2's turn",7)
         elif self.affichage==3:
             pyxel.cls(0)
+            if pyxel.frame_count%10==0:
+                self.eau=[[8*pyxel.rndi(0,4) for i in range(16)] for j in range(16)]
+            for y in range(16):
+                for x in range(16):
+                    pyxel.blt(x*8,y*8,0,self.eau[x][y],32,8,8)
+                
             self.vision = generate_vision(self.carte,self.joueur)
             for x in range(0,16):
                 for y in range(0,16):
@@ -369,15 +372,13 @@ class App:
                         a.update(self.offset)
             for y in range(16):
                 for x in range(16):
-                    if not(0<=x-self.offset[0]<self.wid  and 0<=y-self.offset[1]<self.hei):
-                        pyxel.rect(x*8,y*8,8,8,6)
-                    elif not(self.vision[y-self.offset[1]][x-self.offset[0]]):
+                    if not(self.vision[y-self.offset[1]][x-self.offset[0]]) and (0<=x-self.offset[0]<self.wid  and 0<=y-self.offset[1]<self.hei):
                         pyxel.blt(x*8,y*8,0,40,self.fond,8,8)
     
             pyxel.blt(0,0,0,0,240,16,16,7)
             pyxel.text(13,6,str(self.gold[self.joueur]),0)
             pyxel.blt(0,16,0,0,224,16,16,7)
-            if self.bat == None : a=
+            if self.bat == None : a=0
             else : a=self.bat.vie
             pyxel.text(15,22,str(a),0)
 
