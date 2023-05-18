@@ -175,8 +175,8 @@ class App:
         pyxel.init(128,128, title="NDC 2023")
         pyxel.load("NDC.pyxres")
         self.gold = [100,100] # La quantité de départ de gold de chaque joueurs
-        self.joueur=0
-        self.affichage=4
+        self.joueur=1
+        self.affichage=0
         self.wid = 50
         self.hei = 50
         self.carte=generate_map(self.wid,self.hei)
@@ -227,7 +227,7 @@ class App:
                 x1,y1 = pyxel.rndi(0,self.wid-2),pyxel.rndi(0,self.hei-2)
                 build(base(x1,y1,0),self.carte)
                 x2,y2 = pyxel.rndi(0,self.wid-2),pyxel.rndi(0,self.hei-2)
-                while x2==x1 or y2 == y1 :
+                while x2 in [x1,x1+1,x1-1] or y2 in [y1, y1+1, y1-1] :
                    x2,y2 = pyxel.rndi(0,self.wid-2),pyxel.rndi(0,self.hei-2)
                 build(base(x2,y2,1),self.carte)
                 self.affichage=1
