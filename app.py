@@ -455,13 +455,22 @@ class App:
                 pyxel.text(111,40,'70',0)
                 pyxel.blt(102,50,1,32,32+16*self.joueur,8,8,0)
                 pyxel.text(111,50,str(self.farm_price[self.joueur]),0)
-            elif type(self.bat) == caserne and self.bat.player == self.joueur:
+
+            if type(self.bat) == caserne and self.bat.player == self.joueur:
                 pyxel.blt(102,20,2,16,0+16*self.joueur,8,8,0)
                 pyxel.text(111,20,'10',0)
                 pyxel.blt(102,30,2,16,32+16*self.joueur,8,8,0)
                 pyxel.text(111,30,'30',0)
                 pyxel.blt(102,40,2,16,64+16*self.joueur,8,8,0)
                 pyxel.text(111,40,'30',0)
+
+            if type(self.bat) in [knight, archer, scout]:
+                pyxel.blt(102,20,2,0,112-8*self.joueur,8,8,0)
+                pyxel.blt(102,30,2,8,112-8*self.joueur,8,8,0)
+
+            if self.bat != None and self.attacking != None :
+                if self.attacking.attack != 0 :
+                    pyxel.blt(102,40,2,24,self.attacking.unite*32+self.joueur*16,8,8,0)
 
         elif self.affichage==4:
             pyxel.cls(0)
