@@ -103,7 +103,7 @@ class Personnage:
             remain[self.y][self.x] = (2,8,self.unite*32+16*self.player)
             pyxel.play(0,1)
             
-    def attack(self,thing,map,pos,remain):
+    def attaque(self,thing,map,pos,remain):
         if pyxel.sqrt((pos[0]-self.x)**2 + (pos[1]-self.y)**2) > self.attack_range : return
         if self.nbatack == 0 : return
         pyxel.play(3,0)
@@ -368,7 +368,7 @@ class App:
                             pyxel.play(0,2)
 
                 if self.attacking != None and bat != None :
-                    self.attacking.attack(bat,self.carte,(self.curseur.x,self.curseur.y),self.remain)
+                    self.attacking.attaque(bat,self.carte,(self.curseur.x,self.curseur.y),self.remain)
                     if type(bat) == base and bat.health<=0 and bat.player != self.joueur:
                         self.end = True
                     
@@ -464,7 +464,7 @@ class App:
                 pyxel.blt(102,40,2,16,64+16*self.joueur,8,8,0)
                 pyxel.text(111,40,'30',0)
 
-            if type(self.bat) in [knight, archer, scout]:
+            if type(self.bat) in [knight, archer, scout] and self.bat.player == self.joueur:
                 pyxel.blt(102,20,2,0,112-8*self.joueur,8,8,0)
                 pyxel.blt(102,30,2,8,112-8*self.joueur,8,8,0)
 
