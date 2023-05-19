@@ -17,6 +17,15 @@ You start with 110 Gold. You gain 10 coins each round + 10 for each farm.
 
 IMPORTANT : If you loose vision of a unit, you cannot control it.
 
+## How to build the game
+
+- Use a terminal (works on all OS)
+- Do a `cd PATH/TO/FOLDER`
+- Then do `pyxel package  PATH/TO/FOLDER PYTHON_APP.py`
+- If you want an exe or HTML file, do `pyxel app2exe FOLDER_NAME` or `pyxel app2html FOLDER_NAME`
+- Package the app using 7 zip or the command line
+- Voilà ! A new .exe / .html file is now ready !
+
 ## FAQ
 
 ### What are the controls ?
