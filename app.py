@@ -417,10 +417,14 @@ class App:
                     if not (0<=x-self.offset[0]<self.wid  and 0<=y-self.offset[1]<self.hei) : continue
                     if not(self.vision[y-self.offset[1]][x-self.offset[0]]) :
                         pyxel.blt(x*8,y*8,0,40,self.fond,8,8)
-    
-            pyxel.blt(0,0,0,0,240,16,16,7)
+            if type(self.bat) in [knight, archer, scout]:
+                if self.bat.nbatack != 0:
+                    pyxel.blt(13,110,2,8,88,8,8,0)
+                if self.bat.mvt != 0 :
+                    pyxel.blt(13,110,2,8,96,8,8,0)
+            pyxel.blt(0,0,0,0,240,16,16,7) #icon gold
             pyxel.text(13,6,str(self.gold[self.joueur]),0)
-            pyxel.blt(0,16,0,0,224,16,16,7)
+            pyxel.blt(0,16,0,0,224,16,16,7) #icon health
             if self.bat == None : a=0
             else : a=self.bat.vie
             pyxel.text(15,22,str(a),0)
