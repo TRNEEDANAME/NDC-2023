@@ -9,7 +9,7 @@ A game
 - Pyxel
 - That's it
 
-If you use the .exe file, there is no need for Pyxel
+If you use the .exe / .html file, there is no need for Pyxel
 
 If you want to play with friends, use [Parsec](https://parsec.app/)
 
