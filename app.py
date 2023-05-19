@@ -72,7 +72,7 @@ class Personnage:
         self.x=x
         self.y=y
         self.attaque = attaque
-        # ar is atack range
+        # ar is attack range
         self.ar = ar
         self.unite=unite
         self.vie=vie
@@ -103,7 +103,7 @@ class Personnage:
             r[self.y][self.x] = (2,8,self.unite*32+16*self.player)
             pyxel.play(0,1)
             
-    def atack(self,thing,m,pos,r):
+    def attack(self,thing,m,pos,r):
         if pyxel.sqrt((pos[0]-self.x)**2 + (pos[1]-self.y)**2) > self.ar : return
         if self.nbatack == 0 : return
         pyxel.play(3,0)
@@ -368,7 +368,7 @@ class App:
                             pyxel.play(0,2)
 
                 if self.attacking != None and bat != None :
-                    self.attacking.atack(bat,self.carte,(self.curseur.x,self.curseur.y),self.remain)
+                    self.attacking.attack(bat,self.carte,(self.curseur.x,self.curseur.y),self.remain)
                     if type(bat) == base and bat.vie<=0 and bat.player != self.joueur:
                         self.end = True
                     
