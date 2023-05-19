@@ -19,7 +19,7 @@ IMPORTANT : If you loose vision of a unit, you cannot control it.
 
 ## How to build the game
 
-- Use a terminal (works on all OS)
+- Download the source files or do a `git clone https://github.com/TRNEEDANAME/NDC-2023/` and unzip the .zip file
 - Do a `cd PATH/TO/FOLDER`
 - Then do `pyxel package  PATH/TO/FOLDER PYTHON_APP.py`
 - If you want an exe or HTML file, do `pyxel app2exe FOLDER_NAME` or `pyxel app2html FOLDER_NAME`
