@@ -432,6 +432,7 @@ class App:
                     pyxel.blt(13,110,2,8,88,8,8,0)
                 if self.bat.mvt != 0 :
                     pyxel.blt(13,110,2,8,96,8,8,0)
+                    pyxel.text(22,110,str(self.bat.mvt),0)
             pyxel.blt(0,0,0,0,240,16,16,7) #icon gold
             pyxel.text(13,6,str(self.gold[self.joueur]),0)
             pyxel.blt(0,16,0,0,224,16,16,7) #icon health
