@@ -26,6 +26,9 @@ IMPORTANT : If you loose vision of a unit, you cannot control it.
 - Package the app using 7 zip or the command line
 - Voilà ! A new .exe / .html file is now ready !
 
+### Alternative
+- Go in [Releases](https://github.com/TRNEEDANAME/NDC-2023/releases/) and grab the latest .7zip file, unzip it, inside you have the .exe / .html and the README.md file
+
 ## FAQ
 
 ### What are the controls ?
