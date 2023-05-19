@@ -455,7 +455,7 @@ class App:
                 pyxel.text(111,40,'70',0)
                 pyxel.blt(102,50,1,32,32+16*self.joueur,8,8,0)
                 pyxel.text(111,50,str(self.farm_price[self.joueur]),0)
-            elif type(self.bat) == caserne:
+            elif type(self.bat) == caserne and self.bat.player == self.joueur:
                 pyxel.blt(102,20,2,16,0+16*self.joueur,8,8,0)
                 pyxel.text(111,20,'10',0)
                 pyxel.blt(102,30,2,16,32+16*self.joueur,8,8,0)
