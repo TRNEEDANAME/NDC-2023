@@ -55,4 +55,4 @@ Ideas / brainstorming : TRNEEDANAME, maybenotyou, 1Dorian
 Art : TRNEEDANAME, maybenotyou
 Sound design : 1Dorian, maybenotyou
 
-This game was created for the [Nuit du Code]https://www.nuitducode.net/) which is a Game Jam where you have 6h to create an entire game from scratch using [Pyxel](https://github.com/kitao/pyxel), as free Python game librairy used to create retro-style games.
+This game was created for the [Nuit du Code](https://www.nuitducode.net/) which is a Game Jam where you have 6h to create an entire game from scratch using [Pyxel](https://github.com/kitao/pyxel), as free Python game librairy used to create retro-style games.
