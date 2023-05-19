@@ -13,13 +13,13 @@ def generate_False(wid,hei):
     carte = [[ False for i in range(wid)] for j in range(hei)]
     return carte
 
-def generate_vision(m,p):
-    wid = len(m[0])
-    hei = len(m)
+def generate_vision(map,p):
+    wid = len(map[0])
+    hei = len(map)
     vision = generate_False(wid,hei)
     for y in range(hei):
         for x in range(wid):
-            objet = m[y][x]
+            objet = map[y][x]
             if objet == None : continue
             if objet.player == p:
                 v= objet.vision
@@ -30,34 +30,34 @@ def generate_vision(m,p):
     return vision
 
 
-def find_empty(m,b):
+def find_empty(map,b):
     x = b.x
     y = b.y
     pos = [[x,y-1],[x+1,y-1],[x-1,y],[x+2,y],[x-1,y+1],[x+2,y+1],[x,y+2],[x+1,y+2]]
     tot = []
-    wid = len(m[0])
-    hei = len(m)
+    wid = len(map[0])
+    hei = len(map)
     for i in pos :
-        if (0<=i[0]<wid and 0<=i[1]<hei) and m[i[1]][i[0]] == None : tot.append(i)
+        if (0<=i[0]<wid and 0<=i[1]<hei) and map[i[1]][i[0]] == None : tot.append(i)
     return tot
 
-def build(bat,m):
+def build(bat,map):
     x = bat.x
     y = bat.y
-    if y+1==len(m) or x+1==len(m[0]) : return False
-    if not(m[y][x] == None and m[y][x+1] == None and m[y+1][x] == None and m[y+1][x+1] == None) : return False
-    m[y][x+1] = bat
-    m[y+1][x] = bat
-    m[y][x] = bat
-    m[y+1][x+1] = bat
+    if y+1==len(map) or x+1==len(map[0]) : return False
+    if not(map[y][x] == None and map[y][x+1] == None and map[y+1][x] == None and map[y+1][x+1] == None) : return False
+    map[y][x+1] = bat
+    map[y+1][x] = bat
+    map[y][x] = bat
+    map[y+1][x+1] = bat
     return True
 
 
-def make(b,unit,m,p):
-    pos = find_empty(m,b)
+def make(b,unit,map,p):
+    pos = find_empty(map,b)
     if len(pos) == 0 : return False
     position = pos[pyxel.rndi(0,len(pos)-1)]
-    m[position[1]][position[0]] = unit(position[0],position[1],p)
+    map[position[1]][position[0]] = unit(position[0],position[1],p)
     return True
 
 # ======================================================================
@@ -66,49 +66,49 @@ def make(b,unit,m,p):
 
 
 class Personnage:
-    def __init__(self,x,y,vie,attaque,unite,player,mvt,ar,vision):
+    def __init__(self,x,y,health,attack,unite,player,mvt,attack_range,vision):
         self.mvtmax = mvt
         self.mvt = 0
         self.x=x
         self.y=y
-        self.attaque = attaque
-        # ar is attack range
-        self.ar = ar
+        self.attack = attack
+        # attack_range is attack range
+        self.attack_range = attack_range
         self.unite=unite
-        self.vie=vie
-        self.vie_max=vie
+        self.health=health
+        self.vie_max=health
         self.player=player
         self.vision=vision
         self.nbatack = 1
 
-    def move(self,d,m):
+    def move(self,d,map):
         x = self.x
         y = self.y
-        wid = len(m[0])
-        hei = len(m)
+        wid = len(map[0])
+        hei = len(map)
         if not(0<=d[0]+x<wid and 0<=d[1]+y<hei) : return
-        if not(m[y+d[1]][x+d[0]] == None) : return
+        if not(map[y+d[1]][x+d[0]] == None) : return
         if self.mvt == 0 : return
         self.x = x+d[0]
         self.y = y+d[1]
-        m[y+d[1]][x+d[0]] = self
-        m[y][x] = None
+        map[y+d[1]][x+d[0]] = self
+        map[y][x] = None
         self.mvt -= 1
 
         
-    def damage(self,n,m,r):
-        self.vie -= n
-        if self.vie <= 0:
-            m[self.y][self.x] = None
-            r[self.y][self.x] = (2,8,self.unite*32+16*self.player)
+    def damage(self,num_damage,map,remain):
+        self.health -= num_damage
+        if self.health <= 0:
+            map[self.y][self.x] = None
+            remain[self.y][self.x] = (2,8,self.unite*32+16*self.player)
             pyxel.play(0,1)
             
-    def attack(self,thing,m,pos,r):
-        if pyxel.sqrt((pos[0]-self.x)**2 + (pos[1]-self.y)**2) > self.ar : return
+    def attack(self,thing,map,pos,remain):
+        if pyxel.sqrt((pos[0]-self.x)**2 + (pos[1]-self.y)**2) > self.attack_range : return
         if self.nbatack == 0 : return
         pyxel.play(3,0)
         self.nbatack -= 1
-        thing.damage(self.attaque,m,r)
+        thing.damage(self.attack,map,remain)
         
 
     def new_turn(self):
@@ -117,42 +117,42 @@ class Personnage:
 
     def update(self,offset):
         pyxel.blt((self.x+offset[0])*8,(self.y+offset[1])*8,2,0,self.unite*32+16*self.player,8,8,0)
-        if self.vie<self.vie_max:
+        if self.health<self.vie_max:
             pyxel.rect((self.x+offset[0])*8+1,(self.y+offset[1])*8-1,6,1,8)
-            pyxel.rect((self.x+offset[0])*8+1,(self.y+offset[1])*8-1,int(6*self.vie/self.vie_max),1,3)
+            pyxel.rect((self.x+offset[0])*8+1,(self.y+offset[1])*8-1,int(6*self.health/self.vie_max),1,3)
 
 # ======================================================================
 # ========================= BUILDINGS CLASS ============================
 # ======================================================================
 
 class Batiment:
-    def __init__(self,x,y,vie,unite,player,vision):
+    def __init__(self,x,y,health,unite,player,vision):
         self.x=x
         self.y=y
         self.unite=unite
-        self.vie=vie
-        self.vie_max=vie
+        self.health=health
+        self.vie_max=health
         self.player=player
         self.vision=vision
 
-    def damage(self,n,m,r):
-        self.vie -= n
-        if self.vie <= 0:
-            m[self.y][self.x] = None
-            m[self.y+1][self.x+1] = None
-            m[self.y+1][self.x] = None
-            m[self.y][self.x+1] = None
-            r[self.y][self.x] = (1,16,self.unite*32+16*self.player)
-            r[self.y+1][self.x+1] = (1,24,self.unite*32+16*self.player+8)
-            r[self.y+1][self.x] = (1,16,self.unite*32+16*self.player+8)
-            r[self.y][self.x+1] = (1,24,self.unite*32+16*self.player)
+    def damage(self,num_damage,map,remain):
+        self.health -= num_damage
+        if self.health <= 0:
+            map[self.y][self.x] = None
+            map[self.y+1][self.x+1] = None
+            map[self.y+1][self.x] = None
+            map[self.y][self.x+1] = None
+            remain[self.y][self.x] = (1,16,self.unite*32+16*self.player)
+            remain[self.y+1][self.x+1] = (1,24,self.unite*32+16*self.player+8)
+            remain[self.y+1][self.x] = (1,16,self.unite*32+16*self.player+8)
+            remain[self.y][self.x+1] = (1,24,self.unite*32+16*self.player)
             pyxel.play(0,1)
 
     def update(self,offset):
         pyxel.blt((self.x+offset[0])*8,(self.y+offset[1])*8,1,0,self.unite*32+16*self.player,16,16,0)
-        if self.vie<self.vie_max:
+        if self.health<self.vie_max:
             pyxel.rect((self.x+offset[0])*8+3,(self.y+offset[1])*8-1,10,1,8)
-            pyxel.rect((self.x+offset[0])*8+3,(self.y+offset[1])*8-1,int(10*self.vie/self.vie_max),1,3)
+            pyxel.rect((self.x+offset[0])*8+3,(self.y+offset[1])*8-1,int(10*self.health/self.vie_max),1,3)
 
 # ======================================================================
 # ================================ UNITS ===============================
@@ -369,7 +369,7 @@ class App:
 
                 if self.attacking != None and bat != None :
                     self.attacking.attack(bat,self.carte,(self.curseur.x,self.curseur.y),self.remain)
-                    if type(bat) == base and bat.vie<=0 and bat.player != self.joueur:
+                    if type(bat) == base and bat.health<=0 and bat.player != self.joueur:
                         self.end = True
                     
 
@@ -414,8 +414,8 @@ class App:
                     if not(0<=x-self.offset[0]<self.wid  and 0<=y-self.offset[1]<self.hei): continue
                     if self.vision[y-self.offset[1]][x-self.offset[0]] :
                         pyxel.blt(x*8,y*8,0,self.ecran[y-self.offset[1]][x-self.offset[0]],self.fond,8,8)
-                    r = self.remain[y-self.offset[1]][x-self.offset[0]]
-                    if not r == None : pyxel.blt(x*8,y*8,r[0],r[1],r[2],8,8,0)
+                    remain = self.remain[y-self.offset[1]][x-self.offset[0]]
+                    if not remain == None : pyxel.blt(x*8,y*8,remain[0],remain[1],remain[2],8,8,0)
             
             for x in range(len(self.carte[0])):
                 for y in range(len(self.carte)):
@@ -437,7 +437,7 @@ class App:
             pyxel.text(13,6,str(self.gold[self.joueur]),0)
             pyxel.blt(0,16,0,0,224,16,16,7) #icon health
             if self.bat == None : a=0
-            else : a=self.bat.vie
+            else : a=self.bat.health
             pyxel.text(15,22,str(a),0)
 
             if type(self.bat) in [base,tour,ferme,mur,caserne]:
