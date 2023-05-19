@@ -445,6 +445,24 @@ class App:
             else:
                 self.curseur.update(self.offset)
 
+            # Generation icon de prix:
+            if self.bat == None:
+                pyxel.blt(102,20,1,32,96+16*self.joueur,8,8,0)
+                pyxel.text(111,20,'50',0)
+                pyxel.blt(102,30,1,32,128+16*self.joueur,8,8,0)
+                pyxel.text(111,30,'100',0)
+                pyxel.blt(102,40,1,32,64+16*self.joueur,8,8,0)
+                pyxel.text(111,40,'70',0)
+                pyxel.blt(102,50,1,32,32+16*self.joueur,8,8,0)
+                pyxel.text(111,50,str(self.farm_price[self.joueur]),0)
+            elif type(self.bat) == caserne and self.bat.player == self.joueur:
+                pyxel.blt(102,20,2,16,0+16*self.joueur,8,8,0)
+                pyxel.text(111,20,'10',0)
+                pyxel.blt(102,30,2,16,32+16*self.joueur,8,8,0)
+                pyxel.text(111,30,'30',0)
+                pyxel.blt(102,40,2,16,64+16*self.joueur,8,8,0)
+                pyxel.text(111,40,'30',0)
+
         elif self.affichage==4:
             pyxel.cls(0)
             pyxel.text(35,60,"Player "+str(self.joueur+1)+" win !",7)
