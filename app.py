@@ -101,10 +101,12 @@ class Personnage:
         if self.vie <= 0:
             m[self.y][self.x] = None
             r[self.y][self.x] = (2,8,self.unite*32+16*self.player)
+            pyxel.play(0,1)
             
     def atack(self,thing,m,pos,r):
         if pyxel.sqrt((pos[0]-self.x)**2 + (pos[1]-self.y)**2) > self.ar : return
         if self.nbatack == 0 : return
+        pyxel.play(3,0)
         self.nbatack -= 1
         thing.damage(self.attaque,m,r)
         
@@ -144,6 +146,7 @@ class Batiment:
             r[self.y+1][self.x+1] = (1,24,self.unite*32+16*self.player+8)
             r[self.y+1][self.x] = (1,16,self.unite*32+16*self.player+8)
             r[self.y][self.x+1] = (1,24,self.unite*32+16*self.player)
+            pyxel.play(0,1)
 
     def update(self,offset):
         pyxel.blt((self.x+offset[0])*8,(self.y+offset[1])*8,1,0,self.unite*32+16*self.player,16,16,0)
@@ -324,10 +327,12 @@ class App:
                     if self.gold[self.joueur] >= 50:
                         if build(tour(self.curseur.x,self.curseur.y,self.joueur),self.carte):
                             self.gold[self.joueur] -= 50
+                            pyxel.play(0,2)
                 if type(bat) == caserne and bat.player==self.joueur:
                     if self.gold[self.joueur] >= 10:
                         if make(bat,knight, self.carte,self.joueur):
                             self.gold[self.joueur] -= 10
+                            pyxel.play(0,2)
                 if type(bat) in [knight, archer, scout] and bat.player==self.joueur:
                     if self.select == bat : self.select = None
                     else : self.select = bat
@@ -337,10 +342,12 @@ class App:
                     if self.gold[self.joueur] >= 100:
                         if build(mur(self.curseur.x,self.curseur.y,self.joueur),self.carte) :
                             self.gold[self.joueur] -= 100
+                            pyxel.play(0,2)
                 if type(bat) == caserne and bat.player==self.joueur:
                     if self.gold[self.joueur] >= 30:
                         if make(bat,archer, self.carte,self.joueur):
                             self.gold[self.joueur] -= 30
+                            pyxel.play(0,2)
                 if type(bat) in [knight, archer, scout] and bat.player==self.joueur:
                     if self.attacking == bat or bat.player != self.joueur : self.attacking = None
                     else : self.attacking = bat
@@ -352,11 +359,13 @@ class App:
                     if self.gold[self.joueur] >= 70:
                         if build(caserne(self.curseur.x,self.curseur.y,self.joueur),self.carte) :
                             self.gold[self.joueur] -= 70
+                            pyxel.play(0,2)
                 
                 if type(bat) == caserne and bat.player==self.joueur:
                     if self.gold[self.joueur] >= 30:
                         if make(bat,scout, self.carte,self.joueur):
                             self.gold[self.joueur] -= 30
+                            pyxel.play(0,2)
 
                 if self.attacking != None and bat != None :
                     self.attacking.atack(bat,self.carte,(self.curseur.x,self.curseur.y),self.remain)
@@ -370,6 +379,7 @@ class App:
                         if build(ferme(self.curseur.x,self.curseur.y,self.joueur),self.carte) :
                             self.gold[self.joueur] -= self.farm_price[self.joueur]
                             self.farm_price[self.joueur] = int(self.farm_price[self.joueur]*1.25)
+                            pyxel.play(0,2)
 
 
             if pyxel.btnp(pyxel.KEY_RETURN):
